@@ -38,7 +38,7 @@ public:
 };
 int main() {
 	Solution s;
-	string ss = "ac";
+	string ss = "abbcbabc";
 	s.longestPalindrome(ss);
 	return 0;
 }
