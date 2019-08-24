@@ -31,6 +31,7 @@ public:
 		}
 		int m = word1.size();
 		int n = word2.size();
+		//res[i][j] presents edit-distance between word1[:i] and word2[:j]
 		vector<vector<int>> res(m + 1, vector<int>(n + 1, -1));
 		res.at(0).at(0) = 0;
 		for (int i = 1; i <= m; ++i) {

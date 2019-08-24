@@ -6,33 +6,38 @@ using namespace std;
 class Solution {
 public:
 	string multiply(string num1, string num2) {
-		int sum = 0;
-		string res = "";
-		for (int i = num1.size() - 1; i >= 0; --i) {
-			//auto n1 = stoi(string(1,num1.at(i))) * pow(10, num1.size() -1 - i);
+		vector<int> res(num1.size() + num2.size() + 1, 0);
+		string rs = "";
+		std::reverse(num1.begin(), num1.end());
+		std::reverse(num2.begin(), num2.end());
+		for (int i = 0; i < num1.size(); ++i) {
 			auto n1 = stoi(string(1, num1.at(i)));
-			for (int j = num2.size() - 1; j >= 0; --j) {
-				auto n2 = stoi(string(1, num2.at(j))) * pow(10,num2.size() - 1 - j);
-				sum += n1*n2;
+			for (int j = 0; j < num2.size(); ++j) {
+				auto n2 = stoi(string(1, num2.at(j)));
+				res[i+j] += n1*n2;
 			}
-			res += to_string(sum % 10);
-			sum = sum / 10;
 		}
-		while (sum != 0) {
-			res += std::to_string(sum % 10);
-			sum = sum / 10;
-		}
-		std::reverse(res.begin(), res.end());
-		if (res.front() == '0')
+		bool flag = false;
+		for_each(res.begin(), res.end(), [&flag](int n) {
+			if (n != 0)
+				flag = true;
+		});
+		if (!flag)
 			return "0";
-		else
-			return res;
+		for (int i = 0; i < res.size() - 1; ++i) {
+			rs += to_string(res.at(i) % 10);
+			res.at(i + 1) += res.at(i) / 10;
+		}
+		std::reverse(rs.begin(), rs.end());
+		if (rs.size() > 0 && rs.at(0) == '0')
+			rs = rs.substr(1);
+		return rs;
 	}
 };
 int main() {
 	Solution s;
-	string num1 = "123";
-	string num2 = "456";
+	string num1 = "52";
+	string num2 = "60";
 	auto x = s.multiply(num1, num2);
 	return 0;
 }

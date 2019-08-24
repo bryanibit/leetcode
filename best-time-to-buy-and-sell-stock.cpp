@@ -16,11 +16,23 @@ public:
 		}
 		return max_val;
 	}
+	int maxProfit_1(vector<int>& prices) {
+		int cur_max = 0;
+		int global_max = 0;
+		vector<int> diff;
+		for (int i = 1; i < prices.size(); ++i) {
+			diff.push_back(prices.at(i) - prices.at(i - 1));
+		}
+		for (int j = 0; j < diff.size(); ++j) {
+			cur_max = diff.at(j) > cur_max + diff.at(j) ? diff.at(j) : cur_max + diff.at(j);
+			global_max = max(global_max, cur_max);
+		}
+		return global_max;
+	}
 };
 int main() {
 	Solution s;
-	//vector<int> v = { 7,1,5,3,6,4 };
-	vector<int> v{};
-	auto x = s.maxProfit(v);
+	vector<int> v{ 1, 3, 2, 8, 4, 9 };
+	auto x = s.maxProfit_1(v);
 	return 0;
 }
